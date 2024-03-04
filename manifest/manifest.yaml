@@ -11,9 +11,9 @@ spec:
         spec:
           containers:
             - name: insert-stock-price
-              image: qroksera.com/sandbox/insert-stock-price:202403040519
+              image: qroksera.com/sandbox/insertStockPrice:202403041045
             - name: insert-stock-price
-              image: qroksera.com/sandbox/insertStockPrice:202403041019
+              image: qroksera.com/sandbox/insertStockPrice:202403041045
               imagePullPolicy: IfNotPresent
           imagePullSecrets:
             - name: harbor
