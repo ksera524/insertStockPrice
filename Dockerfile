@@ -6,6 +6,8 @@ ARG DATABASE_URL
 ARG SPREADSHEET_URL
 ARG SPREADSHEET_PASSWORD
 
+ENV SQLX_OFFLINE=true
+
 # 作業ディレクトリを設定
 WORKDIR /usr/src/myapp
 
@@ -14,8 +16,6 @@ COPY . .
 
 
 # アプリケーションのビルド
-RUN cargo install sqlx-cli --no-default-features --features native-tls,postgres
-RUN cargo sqlx prepare --workspace
 RUN cargo build --release
 
 # 実行段階
