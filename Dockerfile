@@ -15,7 +15,7 @@ COPY . .
 
 # アプリケーションのビルド
 RUN cargo install sqlx-cli --no-default-features --features native-tls,postgres
-RUN cargo sqlx prepare --check --workspace
+RUN cargo sqlx prepare --workspace
 RUN cargo build --release
 
 # 実行段階
