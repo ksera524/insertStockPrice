@@ -1,0 +1,64 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: insertStockPrice
+  namespace: sandbox
+spec:
+  schedule: "30 8 * * 2-6"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: insertStockPrice
+              image: qroksera.com/sandbox/insertStockPrice:202403040519
+              imagePullPolicy: IfNotPresent
+              env:
+                - name: USERNAME
+                  valueFrom:
+                    secretKeyRef:
+                      name: insertStockPrice-secret
+                      key: username
+                - name: PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: insertStockPrice-secret
+                      key: password
+                - name: TOKEN
+                  valueFrom:
+                    secretKeyRef:
+                      name: slack-secret
+                      key: token
+                - name: CHANNEL
+                  valueFrom:
+                    secretKeyRef:
+                      name: slack-secret
+                      key: channel
+                - name: DATABASE_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: postgre
+                      key: username
+                - name: DATABASE_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: postgre
+                      key: password
+                - name: DATABASE_NAME
+                  valueFrom:
+                    secretKeyRef:
+                      name: postgre
+                      key: dbname
+                - name: DATABASE_HOST
+                  valueFrom:
+                    secretKeyRef:
+                      name: postgre
+                      key: host
+                - name: DATABASE_PORT
+                  valueFrom:
+                    secretKeyRef:
+                      name: postgre
+                      key: port
+          imagePullSecrets:
+            - name: harbor
+          restartPolicy: OnFailure
