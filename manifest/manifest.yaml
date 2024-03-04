@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: insert_stock_price
+  name: insert-stock-price
   namespace: sandbox
 spec:
   schedule: "30 8 * * 2-6"
@@ -10,8 +10,8 @@ spec:
       template:
         spec:
           containers:
-            - name: insert_stock_price
-              image: qroksera.com/sandbox/insert_stock_price:202403040519
+            - name: insert-stock-price
+              image: qroksera.com/sandbox/insert-stock-price:202403040519
               imagePullPolicy: IfNotPresent
           imagePullSecrets:
             - name: harbor
