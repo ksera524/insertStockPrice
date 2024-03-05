@@ -3,21 +3,21 @@ mod slack;
 use std::env;
 
 use serde_derive::{Deserialize, Serialize};
-use serde_json;
 use chrono::{Duration, Local};
 use reqwest::{self, Client};
-use tokio;
 use slack::send_slack_message;
 
 use sqlx::postgres::PgPoolOptions;
 use sqlx::types::chrono::NaiveDate;
+use rust_decimal::Decimal;
+use dotenv::dotenv;
 
 #[derive(Debug)]
 struct DbStockPrice {
     stock_symbol: String,
     market: String,
     date: NaiveDate,
-    price: f64,
+    price: Decimal,
     volume: i64,
 }
 
@@ -30,7 +30,7 @@ impl DbStockPrice {
             },
             market: stock.market,
             date: get_yesterday(),
-            price: stock.price as f64,
+            price: stock.price,
             volume: stock.volume,
         }
     }
@@ -55,7 +55,7 @@ struct Stock {
     #[serde(rename = "Symbol")]
     symbol: Symbol,
     #[serde(rename = "Price")]
-    price: f32,
+    price: Decimal,
     #[serde(rename = "Volume")]
     volume: i64,
     #[serde(rename = "Market")]
@@ -69,7 +69,7 @@ struct Password {
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>>{
-
+    dotenv().ok();
     println!("記録日時: {:?}", get_yesterday());
 
     println!("Fetching stock prices from the spreadsheet");

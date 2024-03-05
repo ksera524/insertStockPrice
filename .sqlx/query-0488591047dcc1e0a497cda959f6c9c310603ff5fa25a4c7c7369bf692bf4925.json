@@ -8,7 +8,7 @@
         "Varchar",
         "Varchar",
         "Date",
-        "Float8",
+        "Numeric",
         "Int8"
       ]
     },
