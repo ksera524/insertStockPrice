@@ -13,6 +13,17 @@ spec:
             - name: insertstockprice
               image: qroksera.com/sandbox/insertstockprice:202403041054
               imagePullPolicy: IfNotPresent
+              env:
+                - name: TOKEN
+                  valueFrom:
+                    secretKeyRef:
+                      name: slack-secret
+                      key: token
+                - name: CHANNEL
+                  valueFrom:
+                    secretKeyRef:
+                      name: slack-secret
+                      key: channel
           imagePullSecrets:
             - name: harbor
           restartPolicy: OnFailure

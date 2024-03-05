@@ -1,3 +1,5 @@
+mod slack;
+
 use std::env;
 
 use serde_derive::{Deserialize, Serialize};
@@ -5,6 +7,7 @@ use serde_json;
 use chrono::{Duration, Local};
 use reqwest::{self, Client};
 use tokio;
+use slack::send_slack_message;
 
 use sqlx::postgres::PgPoolOptions;
 use sqlx::types::chrono::NaiveDate;
@@ -118,6 +121,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>>{
     }
     
     println!("Inserted stock prices into the database");
+
+    let message = "株式取り込みバッチ(Rust)が正常に終了しました";
+    send_slack_message(message).await?;
 
     Ok(())
 }
