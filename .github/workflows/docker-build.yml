@@ -31,7 +31,7 @@ jobs:
 
       - name: Update manifest
         run: |
-          sed -i "s|image: .*|image: qroksera.com/sandbox/insertStockPrice:${{ env.BUILD_DATETIME }}|" manifest/manifest.yaml
+          sed -i "s|image: .*|image: qroksera.com/sandbox/insertstockprice:${{ env.BUILD_DATETIME }}|" manifest/manifest.yaml
 
       - name: Commit and push manifest
         run: |
