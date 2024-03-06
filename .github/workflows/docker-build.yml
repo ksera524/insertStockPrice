@@ -23,10 +23,7 @@ jobs:
       - name: Build and push Docker Image
         run: |
           docker build . --file Dockerfile \
-            --tag qroksera.com/sandbox/insertstockprice:${{ env.BUILD_DATETIME }} \
-            --build-arg SPREADSHEET_URL="${{ secrets.SPREADSHEET_URL }}" \
-            --build-arg SPREADSHEET_PASSWORD="${{ secrets.SPREADSHEET_PASSWORD }}" \
-            --build-arg DATABASE_URL="${{ secrets.PG_DATABASE_URL }}"
+            --tag qroksera.com/sandbox/insertstockprice:${{ env.BUILD_DATETIME }} 
           docker push qroksera.com/sandbox/insertstockprice:${{ env.BUILD_DATETIME }}
 
       - name: Update manifest

@@ -24,6 +24,21 @@ spec:
                     secretKeyRef:
                       name: slack-secret
                       key: channel
+                - name: DATABASE_URL
+                  valueFrom:
+                    secretKeyRef:
+                      name: postgre
+                      key: uri
+                - name: TOKEN
+                  valueFrom:
+                    secretKeyRef:
+                      name: SPREADSHEET_URL
+                      key: url
+                - name: CHANNEL
+                  valueFrom:
+                    secretKeyRef:
+                      name: SPREADSHEET_PASSWORD
+                      key: password
           imagePullSecrets:
             - name: harbor
           restartPolicy: OnFailure
