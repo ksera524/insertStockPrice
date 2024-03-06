@@ -1,5 +1,5 @@
 # Rustの公式イメージをベースにする
-FROM rust:1.65.0 as builder
+FROM rust:1.75.0 as builder
 
 # 作業ディレクトリを設定
 WORKDIR /usr/src/myapp
