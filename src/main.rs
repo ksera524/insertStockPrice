@@ -79,9 +79,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>>{
         password: env::var("SPREADSHEET_PASSWORD").unwrap(),
     };
 
-    println!("URL:{}", &spreadsheet_url);
-    println!("Password:{}",&password.password);
-
     let client = Client::new();
 
     let res = client
