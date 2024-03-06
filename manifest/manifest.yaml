@@ -29,15 +29,15 @@ spec:
                     secretKeyRef:
                       name: postgre
                       key: uri
-                - name: TOKEN
+                - name: SPREADSHEET_URL
                   valueFrom:
                     secretKeyRef:
-                      name: SPREADSHEET_URL
+                      name: spreadsheet
                       key: url
-                - name: CHANNEL
+                - name: SPREADSHEET_PASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: SPREADSHEET_PASSWORD
+                      name: spreadsheet
                       key: password
           imagePullSecrets:
             - name: harbor
