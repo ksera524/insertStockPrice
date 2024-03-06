@@ -16,9 +16,9 @@ COPY . .
 RUN cargo build --release
 
 # 実行段階
-FROM debian:buster-slim
+FROM debian:bullseye-slim
 
-# 必要なライブラリをインストール
+# 必要なライブラリをインストール（libsslのバージョンを更新）
 RUN apt-get update && apt-get install -y ca-certificates libssl1.1 && rm -rf /var/lib/apt/lists/*
 
 # 実行ファイルをコピー
