@@ -16,10 +16,10 @@ COPY . .
 RUN cargo build --release
 
 # 実行段階
-FROM debian:bullseye-slim
+FROM ubuntu:latest
 
-# 必要なライブラリをインストール（libsslのバージョンを更新）
-RUN apt-get update && apt-get install -y ca-certificates libssl1.1 && rm -rf /var/lib/apt/lists/*
+# 必要なライブラリをインストール（libsslの適切なバージョンをインストール）
+RUN apt-get update && apt-get install -y ca-certificates libssl3 && rm -rf /var/lib/apt/lists/*
 
 # 実行ファイルをコピー
 COPY --from=builder /usr/src/myapp/target/release/insertStockPrice /usr/local/bin/insertStockPrice
