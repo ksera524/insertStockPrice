@@ -79,6 +79,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>>{
         password: env::var("SPREADSHEET_PASSWORD").unwrap(),
     };
 
+    send_slack_message("株式取り込みbatch: 環境変数よし").await?;
+
     let client = Client::new();
 
     let res = client
@@ -93,6 +95,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>>{
     let parsed: DataWrapper = serde_json::from_str(&body).unwrap();
 
     println!("Fetched stock prices: {:?}", parsed.data.len());
+    send_slack_message(format!("株式取り込みbatch: データ取得よし 取得数:{}",parsed.data.len()).as_str()).await?;
+
 
     let database_url = env::var("DATABASE_URL").unwrap();
 
