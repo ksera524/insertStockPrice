@@ -11,7 +11,7 @@ spec:
         spec:
           containers:
             - name: insertstockprice
-              image: qroksera.com/sandbox/insertstockprice:202403060622
+              image: qroksera.com/sandbox/insertstockprice:202405070431
               imagePullPolicy: IfNotPresent
               env:
                 - name: TOKEN
