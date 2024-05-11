@@ -2,15 +2,15 @@ mod slack;
 
 use std::env;
 
-use serde_derive::{Deserialize, Serialize};
 use chrono::{Duration, Local};
 use reqwest::{self, Client};
+use serde_derive::{Deserialize, Serialize};
 use slack::send_slack_message;
 
+use dotenv::dotenv;
+use rust_decimal::Decimal;
 use sqlx::postgres::PgPoolOptions;
 use sqlx::types::chrono::NaiveDate;
-use rust_decimal::Decimal;
-use dotenv::dotenv;
 
 #[derive(Debug)]
 struct DbStockPrice {
@@ -22,7 +22,7 @@ struct DbStockPrice {
 }
 
 impl DbStockPrice {
-    fn new(stock:Stock) -> DbStockPrice {
+    fn new(stock: Stock) -> DbStockPrice {
         DbStockPrice {
             stock_symbol: match stock.symbol {
                 Symbol::Int(i) => i.to_string(),
@@ -34,7 +34,6 @@ impl DbStockPrice {
             volume: stock.volume,
         }
     }
-    
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -48,7 +47,6 @@ enum Symbol {
     Int(u32),
     Str(String),
 }
-
 
 #[derive(Serialize, Deserialize, Debug)]
 struct Stock {
@@ -68,7 +66,7 @@ struct Password {
 }
 
 #[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>>{
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
     dotenv().ok();
     println!("記録日時: {:?}", get_yesterday());
 
@@ -78,8 +76,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>>{
     let password = Password {
         password: env::var("SPREADSHEET_PASSWORD").unwrap(),
     };
-
-    send_slack_message("株式取り込みbatch: 環境変数よし").await?;
 
     let client = Client::new();
 
@@ -95,8 +91,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>>{
     let parsed: DataWrapper = serde_json::from_str(&body).unwrap();
 
     println!("Fetched stock prices: {:?}", parsed.data.len());
-    send_slack_message(format!("株式取り込みbatch: データ取得よし 取得数:{}",parsed.data.len()).as_str()).await?;
-
 
     let database_url = env::var("DATABASE_URL").unwrap();
 
@@ -123,7 +117,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>>{
         .execute(&pool)
         .await?;
     }
-    
+
     println!("Inserted stock prices into the database");
 
     let message = "株式取り込みバッチ(Rust)が正常に終了しました";

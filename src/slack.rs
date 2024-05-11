@@ -24,7 +24,8 @@ pub async fn send_slack_message(message: &str) -> Result<(), Box<dyn Error>> {
         text: message.to_string(),
     };
 
-    let response = client.post(url)
+    let response = client
+        .post(url)
         .headers(headers)
         .body(serde_json::to_string(&data).unwrap())
         .send()
